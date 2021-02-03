@@ -1,0 +1,9 @@
+<header *ngIf="isLogged">
+    <div class="navbar"> 
+    <h1>Angular Login</h1>
+    <nav>
+      <a href="/">Inicio</a>
+      <button pButton label="Cerrar Sesión" (click)="logout()" class="p-button-sm p-button-danger"></button>
+    </nav>
+    </div>
+</header>

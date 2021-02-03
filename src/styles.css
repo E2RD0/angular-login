@@ -1,1 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.navbar{
+    width: 100%;
+    padding: 10px 35px;
+    background-color: #673AB7;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+}
+.navbar h1{
+    font-size: 1.2rem;
+}
+.navbar a{
+    color: #fff;
+    text-decoration: none;
+    margin: 10px;
+    vertical-align: middle;
+}
+.navbar nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-box{
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+.container{
+    padding: 2rem;
+}
