@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserInterface } from '@app/_models';
-import{AuthService} from '@app/_services/auth.service';
+import { UserInterface } from '../_models';
+import{AuthService} from '../_services/auth.service';
 import { MessageService } from 'primeng/api';
 
 @Component({
