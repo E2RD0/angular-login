@@ -13,7 +13,7 @@ intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> 
       return next.handle(req);
     }
     const headers = req.clone({
-      headers: req.headers.set('Authorization', `${token}`)
+      headers: req.headers.set('Auth-Key', `${token}`)
     });
     return next.handle(headers);
 }
