@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { from, Observable, throwError } from 'rxjs';
+import { catchError, concatMap, map } from 'rxjs/operators';
 
 import { Product } from './product';
 
@@ -23,6 +23,27 @@ export class ProductService {
     }
     createProduct(product: Product){
         return this.http.post<Product>(this.apiURL, JSON.stringify(product), { headers: this.headers })
-        .pipe(map(data => data));
+        .pipe(map(data => data),catchError(error => this.errorHandler(error, 'Error al ingresar los datos')));
     }
+    updateProduct(product: Product){
+        return this.http.put<Product>(this.apiURL, JSON.stringify(product), { headers: this.headers })
+        .pipe(map(data => data), catchError(error => this.errorHandler(error, 'Error al actualizar los datos')));
+    }
+    deleteProduct(product: Product){
+        return this.http.delete(`${this.apiURL}/${product.id}`)
+        .pipe(catchError(error => this.errorHandler(error, `Error al eliminar ${product.name}`, 'Error al eliminar entrada')));
+    }
+    
+    errorHandler(error, mensaje?, mensaje422?) {
+        console.log(error);
+        let errorMessage = '';
+        if (error.error.status==422) {
+            errorMessage = mensaje422 ? mensaje422: 'Formato de datos incorrecto';
+          }
+        else{
+            errorMessage = mensaje? mensaje: 'Error al ejecutar operación';
+        }
+        return throwError(errorMessage);
+     }
+    
 }

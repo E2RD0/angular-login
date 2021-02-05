@@ -42,14 +42,34 @@ export class CrudComponent implements OnInit{
   }
 
   deleteSelectedProducts() {
+      let deletedProducts = [];
       this.confirmationService.confirm({
           message: '¿Estás seguro de que quieres eliminar las entradas seleccionadas?',
           header: 'Confirm',
           icon: 'pi pi-exclamation-triangle',
           accept: () => {
-              this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-              this.selectedProducts = null;
-              this.messageService.add({severity:'success', summary: 'Éxito', detail: 'Entradas eliminadas', life: 3000});
+            this.selectedProducts.forEach(product => {
+                this.productService.deleteProduct(product)
+                .subscribe(
+                    ()=>{
+                        deletedProducts.push(product);
+                        this.products = this.products.filter(val => val.id !== product.id);
+                        this.product = {};
+                    },
+                    error=>{
+                        this.messageService.add({severity:'error', summary: error, detail:''})
+                    },
+                    () => console.log("observable complete")
+                    )
+            });
+            /*console.log("Productos eliminados: " + deletedProducts);
+            console.log("Productos seleccionados: " + this.selectedProducts);
+            if(this.selectedProducts == deletedProducts){
+                console.log("test")
+                this.messageService.add({severity:'success', summary: 'Éxito', detail: 'Entradas eliminadas', life: 3000});
+            }*/
+            this.selectedProducts = [];
+            //this.products = this.products.filter(val => !deletedProducts.includes(val));
           }
       });
   }
@@ -66,9 +86,17 @@ export class CrudComponent implements OnInit{
           header: 'Confirm',
           icon: 'pi pi-exclamation-triangle',
           accept: () => {
-              this.products = this.products.filter(val => val.id !== product.id);
-              this.product = {};
-              this.messageService.add({severity:'success', summary: 'Éxito', detail: 'Entrada eliminada', life: 3000});
+            this.productService.deleteProduct(product)
+            .subscribe(
+                ()=>{
+                    this.products = this.products.filter(val => val.id !== product.id);
+                    this.product = {};
+                    this.messageService.add({severity:'success', summary: 'Éxito', detail: 'Entrada eliminada', life: 2000});
+                },
+                error=>{
+                    this.messageService.add({severity:'error', summary: error, detail:''});
+            });
+              
           }
       });
   }
@@ -78,31 +106,33 @@ export class CrudComponent implements OnInit{
       this.submitted = false;
   }
   
-  saveProduct() {
-      this.submitted = true;
+    saveProduct() {
+        this.submitted = true;
+        if (this.product.name !=undefined && this.product.name.trim() !='' && this.product.quantity>0 && this.product.startDate!=null) {
+            this.product.startDate = this.datepipe.transform(this.product.startDate , 'yyyy-MM-dd')  
 
-      if (this.product.name !=undefined && this.product.name.trim() !='' && this.product.quantity>0 && this.product.startDate!=null) {
-          if (this.product.id) {
-              this.products[this.findIndexById(this.product.id)] = this.product;                
-              this.messageService.add({severity:'success', summary: 'Éxito', detail: 'Entrada actualizada', life: 3000});
-          }
-          else {
-              this.product.startDate = this.datepipe.transform(this.product.startDate , 'yyyy-MM-dd')
+            if (this.product.id) {
+                this.productService.updateProduct(this.product)
+                .subscribe(
+                    data=>{
+                        this.product = data;
+                        this.products[this.findIndexById(this.product.id)] = this.product;                
+                        this.messageService.add({severity:'success', summary: 'Éxito', detail: 'Entrada actualizada', life: 2000});
+                    },
+                    error=>{
+                        this.messageService.add({severity:'error', summary: error, detail:''});
+                });
+            }
+            else {
                 this.productService.createProduct(this.product)
                 .subscribe(
-                data=>{
-                  console.log(data);
-                  this.product = data;
-                  this.products.push(this.product);
-                  this.messageService.add({severity:'success', summary: 'Éxito', detail: 'Datos ingresados', life: 3000});
-                },
-                error=>{
-                  if (error.status==422) {
-                    this.messageService.add({severity:'warn', summary:'Formato de datos incorrecto', detail:''});
-                  }
-                  else{
-                    this.messageService.add({severity:'error', summary:'Error al ingresar datos', detail:''});
-                  }
+                    data=>{
+                        this.product = data;
+                        this.products.push(this.product);
+                        this.messageService.add({severity:'success', summary: 'Éxito', detail: 'Datos ingresados', life: 2000});
+                    },
+                    error=>{
+                        this.messageService.add({severity:'error', summary: error, detail:''});
                 });
           }
 

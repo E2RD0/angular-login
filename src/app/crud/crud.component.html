@@ -74,7 +74,7 @@
             </div>
             <div class="p-field p-col">
                 <label for="startDate">Fecha</label>
-                <p-calendar appendTo="body" id="startDate" [(ngModel)]="product.startDate" dateFormat="yy-mm-dd"></p-calendar>
+                <p-calendar appendTo="body" [responsive]="true" id="startDate" [(ngModel)]="product.startDate" dateFormat="yy-mm-dd"></p-calendar>
                 <small class="p-invalid" *ngIf="submitted && !product.startDate">Es necesario completar este campo.</small>
             </div>
 
