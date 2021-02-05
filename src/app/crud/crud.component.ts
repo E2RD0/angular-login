@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from './product';
-import { ProductService } from './productservice';
+import { Product } from '../_models/product';
+import { ProductService } from '../_services/productservice';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { DatePipe } from '@angular/common';
@@ -8,13 +8,6 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-crud',
   templateUrl: './crud.component.html',
-  styles: [`
-        :host ::ng-deep .p-dialog .product-image {
-            width: 150px;
-            margin: 0 auto 2rem auto;
-            display: block;
-        }
-    `],
   styleUrls: ['./crud.component.css'],
   providers: [DatePipe, MessageService,ConfirmationService, ProductService]
 })
@@ -76,7 +69,6 @@ export class CrudComponent implements OnInit{
 
   editProduct(product: Product) {
       this.product = {...product};
-      this.product.startDate = this.product.startDate.join('-');
       this.productDialog = true;
   }
 
@@ -106,7 +98,8 @@ export class CrudComponent implements OnInit{
       this.submitted = false;
   }
   
-    saveProduct() {
+    saveProduct(product: Product) {
+        this.product = product;
         this.submitted = true;
         if (this.product.name !=undefined && this.product.name.trim() !='' && this.product.quantity>0 && this.product.startDate!=null) {
             this.product.startDate = this.datepipe.transform(this.product.startDate , 'yyyy-MM-dd')  

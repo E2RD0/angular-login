@@ -57,36 +57,6 @@
     </div>
 </div>
 
-<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Información" [modal]="true" styleClass="p-fluid">
-    <ng-template pTemplate="content">
-        <div class="p-field">
-            <label for="name">Name</label>
-            <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus />
-            <small class="p-invalid" *ngIf="submitted && !product.name">Es necesario completar este campo.</small>
-        </div> 
-
-        <div class="p-formgrid p-grid">
-            <div class="p-field p-col">
-                <label for="quantity">Cantidad</label>
-                <p-inputNumber id="quantity" [(ngModel)]="product.quantity"></p-inputNumber>
-                <small class="p-invalid" *ngIf="submitted && !product.quantity">Es necesario completar este campo.</small>
-                <small class="p-invalid" *ngIf="submitted && product.quantity && !(product.quantity>0)">La cantidad debe de ser positiva.</small>
-            </div>
-            <div class="p-field p-col">
-                <label for="startDate">Fecha</label>
-                <p-calendar appendTo="body" [responsive]="true" id="startDate" [(ngModel)]="product.startDate" dateFormat="yy-mm-dd"></p-calendar>
-                <small class="p-invalid" *ngIf="submitted && !product.startDate">Es necesario completar este campo.</small>
-            </div>
-
-        </div>
-    </ng-template>
-    
-    <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
-    </ng-template>
-</p-dialog>
-
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
-    
+<app-form [(display)] ="productDialog" [product] ="product" (onClose)="hideDialog()" (onSave)="saveProduct(product)"></app-form>

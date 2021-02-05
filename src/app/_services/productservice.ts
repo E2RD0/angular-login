@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
 import { catchError, concatMap, map } from 'rxjs/operators';
 
-import { Product } from './product';
+import { Product } from '../_models/product';
 
 @Injectable()
 export class ProductService {

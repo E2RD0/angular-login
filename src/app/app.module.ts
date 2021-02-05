@@ -31,6 +31,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     LoginComponent,
     HomeComponent,
     NavbarComponent,
-    CrudComponent
+    CrudComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
