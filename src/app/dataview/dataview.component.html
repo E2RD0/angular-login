@@ -1,0 +1,52 @@
+<p-toast></p-toast>
+
+<div class="card">
+    <p-dataView #dv [value]="products" [paginator]="true" [rows]="9" filterBy="startDate" layout="grid">
+        <ng-template pTemplate="header">
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+                <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+                <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                    <p-calendar showButtonBar="true" (onClearClick)="resetFilter()" [readonlyInput]="true" (onSelect)="filter()" selectionMode="range" showIcon="true" [(ngModel)]="filterRangeDate" dateFormat="yy-mm-dd"></p-calendar>
+                </span>
+                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+            </div>
+        </ng-template>
+        <ng-template let-product pTemplate="listItem">
+            <div class="p-col-12">
+                <div class="product-list-item">
+                    <img src="../../assets/default.png" alt="">
+                    <div class="product-list-detail">
+                        <div class="product-name">{{product.name}}</div>
+                        <div class="product-description">Cantidad: {{product.quantity}}</div>
+                        <span>{{product.startDate}}</span>
+                    </div>
+                    <div class="product-list-action">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(product)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template let-product pTemplate="gridItem">
+            <div class="p-col-12 p-md-4">
+                <div class="product-grid-item card">
+                    <div class="product-grid-item-content">
+                        <img src="../../assets/default.png" alt="">
+                        <div class="product-name">{{product.name}}</div>
+                        <div class="product-description">Cantidad: {{product.quantity}}</div>
+                    </div>
+                    <div class="product-grid-item-bottom">
+                        <span class="product-date">{{product.startDate}}</span>
+                        <div>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(product)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+    <app-form [(display)] ="productDialog" [product] ="product" (onClose)="hideDialog()" (onSave)="saveProduct(product)"></app-form>

@@ -6,10 +6,12 @@ import { LoginComponent } from './login/login.component';
 import {AuthGuard} from "./guards/auth.guard";
 import { LoggedGuard } from './guards/logged.guard';
 import { CrudComponent } from './crud/crud.component';
+import { DataviewComponent } from './dataview/dataview.component';
 
 const routes: Routes = [
   {path: '', component : HomeComponent, canActivate: [AuthGuard]},
   {path: 'crud', component : CrudComponent, canActivate: [AuthGuard]},
+  {path: 'dataview', component : DataviewComponent, canActivate: [AuthGuard]},
   {path: 'login', component : LoginComponent, canActivate: [LoggedGuard]}
 ];
 

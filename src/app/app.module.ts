@@ -12,6 +12,8 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AuthInterceptor } from './_interceptors/authinterceptor';
 import { CrudComponent } from './crud/crud.component';
+import { FormComponent } from './form/form.component';
+import { DataviewComponent } from './dataview/dataview.component';
 
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
@@ -31,7 +33,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { FormComponent } from './form/form.component';
+import {DataViewModule} from 'primeng/dataview';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { FormComponent } from './form/form.component';
     HomeComponent,
     NavbarComponent,
     CrudComponent,
-    FormComponent
+    FormComponent,
+    DataviewComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +69,7 @@ import { FormComponent } from './form/form.component';
     InputNumberModule,
     ConfirmDialogModule,
     InputTextareaModule,
+    DataViewModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
